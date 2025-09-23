@@ -1,0 +1,5 @@
+{"vcs1":{"timestamp_begin":1758607367.036666902, "rt":0.90, "ut":0.07, "st":0.13}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1758607366.564699219}
+{"VCS_COMP_START_TIME": 1758607366.564699219}
+{"VCS_COMP_END_TIME": 1758607368.817557769}
+{"VCS_USER_OPTIONS": "-debug_access+all -sverilog -R -full64 -v tb.sv ../src/FIFO.sv"}

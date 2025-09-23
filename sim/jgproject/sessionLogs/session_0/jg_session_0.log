@@ -1,0 +1,167 @@
+# ----------------------------------------
+# Jasper Version Info
+# tool      : Jasper 2022.03
+# platform  : Linux 6.8.0-51-generic
+# version   : 2022.03p002 64 bits
+# build date: 2022.05.26 13:21:20 UTC
+# ----------------------------------------
+# started   : 2025-09-23 14:55:18 CST
+# hostname  : vcsdl4.(none)
+# pid       : 255977
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:46777' '-style' 'windows' '-data' 'AAAAWnicY2RgYLCp////PwMYMFcBCQEGHwZfhiAGVyDpzxAGpOGA8QGUYcMI4gGxCIMuQzFDKUMBQypDEUMOQyZDHkMJUJwdAFhGC/s=' '-proj' '/home/joane3131/FV_1141/Project1_Group32/sim/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/joane3131/FV_1141/Project1_Group32/sim/jgproject/.tmp/.initCmds.tcl'
+
+Any disclosure about the Cadence Design Systems software or its use
+model to any third party violates the written Non-Disclosure Agreement
+between Cadence Design Systems, Inc. and the customer.
+
+THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
+CADENCE DESIGN SYSTEMS, INC. USE, DISCLOSURE, OR REPRODUCTION IS
+PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF CADENCE
+DESIGN SYSTEMS, INC.
+
+Copyright (C) 2000-2022 Cadence Design Systems, Inc. All Rights
+Reserved.  Unpublished -- rights reserved under the copyright laws of
+the United States.
+
+This product includes software developed by others and redistributed
+according to license agreement. See doc/third_party_readme.txt for
+further details.
+
+RESTRICTED RIGHTS LEGEND
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) (1) (ii) of the Rights in
+Technical Data and Computer Software clause at DFARS 252.227-7013 or
+subparagraphs (c) (1) and (2) of Commercial Computer Software -- Restricted
+Rights at 48 CFR 52.227-19, as applicable.
+
+
+                          Cadence Design Systems, Inc.
+                          2655 Seely Avenue
+                          San Jose, CA 95134
+                          Phone: 408.943.1234
+
+For technical assistance visit http://support.cadence.com.
+
+Jasper Apps Analysis Session - /home/joane3131/FV_1141/Project1_Group32/sim/jgproject/sessionLogs/session_0
+
+INFO: successfully checked out licenses "jasper_interactive" and "jasper_dao".
+INFO: reading configuration file "/home/joane3131/.config/cadence/jasper.conf".
+% check_superlint -init
+% config_rtlds -rule -enable -domain { LINT }
+% analyze -sv ../src/FIFO.sv
+[-- (VERI-1482)] Analyzing Verilog file '/cad/cadence/JASPER/jasper_2022.03p002/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file '../src/FIFO.sv'
+% elaborate -top FIFO
+INFO (ISW003): Top module name is "FIFO".
+[INFO (HIER-8002)] ../src/FIFO.sv(69): Disabling old hierarchical reference handler
+[INFO (VERI-1018)] ../src/FIFO.sv(5): compiling module 'FIFO'
+[WARN (VERI-1209)] ../src/FIFO.sv(32): expression size 32 truncated to fit in target size 3
+[WARN (VERI-1209)] ../src/FIFO.sv(46): expression size 32 truncated to fit in target size 3
+INFO (INL208): Elaboration synthesis summary:
+  Number of synthesized netlists          1 (0 packages)
+  Single run mode                         On
+  Pipeline                                On (1 pipelined netlists)
+  Late hierarchical reference connection  On
+  Number of analyzed Verilog modules      1 (1 synthesized)
+  Number of analyzed VHDL entities        0 (0 synthesized)
+INFO (INL003): Clearing all state information (assumes, stopats, and so forth).
+FIFO
+[<embedded>] % clock clk
+[<embedded>] % reset rstN
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rstN".
+[<embedded>] % set_superlint_fsm_ctl_livelock true
+WARNING (WSL070): This command is deprecated.
+    Use "config_rtlds -rule -enable -tag {FSM_IS_LVLK FSM_IS_PLLK FSM_IS_NLLK}" instead.
+    For CTL properties, enable FSM_IS_LVLK, and for LTL properties, enable FSM_IS_PLLK and FSM_IS_NLLK.
+[<embedded>] % set_superlint_fsm_ctl_deadlock true
+WARNING (WSL069): This command is deprecated.
+    Use "config_rtlds -rule -enable -tag {FSM_IS_DDLK FSM_IS_PDLK FSM_IS_NDLK}" instead.
+    For CTL properties, enable FSM_IS_DDLK, and for LTL properties, enable FSM_IS_PDLK and FSM_IS_NDLK.
+[<embedded>] % check_superlint -extract
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 4 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 3 iterations. Assigned values for 0 of 22 design flops, 0 of 0 design latches, 10 of 10 internal elements.
+WARNING (WRS031): 22 of 22 design flop(s) with asynchronous reset condition, but not reset. Run "get_reset_info -x_value -with_reset_pin" to get a list of such flops.
+INFO (IRS039): Reset analysis complete.
+INFO (ISL009): Started detection of BLK_NO_RCHB, ARY_IS_OOBI, ASG_AR_OVFL, CAS_NO_PRIO, EXP_AR_OVFL checks
+INFO (ISL009): Started detection of FSM_IS_DDLK,FSM_IS_LVLK,FSM_IS_PDLK,FSM_IS_PLLK checks
+INFO (ISL009): Started detection of BUS_IS_CONT,BUS_IS_FLOT checks
+INFO (ISL014): Started extracting properties for BLK_NO_RCHB,ARY_IS_OOBI,ASG_AR_OVFL,CAS_NO_PRIO,EXP_AR_OVFL checks
+INFO (ISL015): Extracted 8 properties of BLK_NO_RCHB,ARY_IS_OOBI,ASG_AR_OVFL,CAS_NO_PRIO,EXP_AR_OVFL
+INFO (ISL014): Started extracting properties for BUS_IS_CONT,BUS_IS_FLOT checks
+INFO (ISL018): Started extraction of structural checks
+INFO (ISL018): Started building clock tree
+INFO (ISL018): Finished building clock tree
+INFO (ISL018): Started building reset tree
+INFO (ISL018): Finished building reset tree
+INFO (ISL018): Violation Count: Errors = 0 Warnings = 31 Info = 1
+40
+[<embedded>] % set_superlint_prove_parallel_tasks on
+[<embedded>] % set_prove_no_traces true
+[<embedded>] % 
+[<embedded>] % session -refresh
+[<embedded>] % clear -all
+INFO (IPF121): Cleared environment completely for new design analysis.
+% config_rtlds -rule -enable -domain { LINT }
+% analyze -sv ../src/FIFO.sv
+[-- (VERI-1482)] Analyzing Verilog file '/cad/cadence/JASPER/jasper_2022.03p002/lib/verilog/packages/std/std.sv' into library 'std'
+[-- (VERI-1482)] Analyzing Verilog file '../src/FIFO.sv'
+% elaborate -top FIFO
+INFO (ISW003): Top module name is "FIFO".
+[INFO (HIER-8002)] ../src/FIFO.sv(69): Disabling old hierarchical reference handler
+[INFO (VERI-1018)] ../src/FIFO.sv(5): compiling module 'FIFO'
+INFO (INL208): Elaboration synthesis summary:
+  Number of synthesized netlists          1 (0 packages)
+  Single run mode                         On
+  Pipeline                                On (1 pipelined netlists)
+  Late hierarchical reference connection  On
+  Number of analyzed Verilog modules      1 (1 synthesized)
+  Number of analyzed VHDL entities        0 (0 synthesized)
+INFO (INL003): Clearing all state information (assumes, stopats, and so forth).
+FIFO
+[<embedded>] % clock clk
+[<embedded>] % reset rstN
+INFO (IPM031): Clearing proof results of all properties.
+INFO (IRS006): Current reset condition is "rstN".
+[<embedded>] % set_superlint_fsm_ctl_livelock true
+WARNING (WSL070): This command is deprecated.
+    Use "config_rtlds -rule -enable -tag {FSM_IS_LVLK FSM_IS_PLLK FSM_IS_NLLK}" instead.
+    For CTL properties, enable FSM_IS_LVLK, and for LTL properties, enable FSM_IS_PLLK and FSM_IS_NLLK.
+[<embedded>] % set_superlint_fsm_ctl_deadlock true
+WARNING (WSL069): This command is deprecated.
+    Use "config_rtlds -rule -enable -tag {FSM_IS_DDLK FSM_IS_PDLK FSM_IS_NDLK}" instead.
+    For CTL properties, enable FSM_IS_DDLK, and for LTL properties, enable FSM_IS_PDLK and FSM_IS_NDLK.
+[<embedded>] % check_superlint -extract
+INFO (IRS029): Starting reset analysis: phase 1 of 4.
+INFO (IRS030): Running reset analysis: phase 2 of 4.
+INFO (IRS031): Running reset analysis: phase 3 of 4.
+INFO (IRS020): Starting the reset analysis simulation with a limit of 100 iterations (phase 4 of 4).
+INFO (IRS024): Reset iterations 0 to 3 analyzed.
+INFO (IRS018): Reset analysis simulation executed for 2 iterations. Assigned values for 0 of 22 design flops, 0 of 0 design latches, 10 of 10 internal elements.
+WARNING (WRS031): 22 of 22 design flop(s) with asynchronous reset condition, but not reset. Run "get_reset_info -x_value -with_reset_pin" to get a list of such flops.
+INFO (IRS039): Reset analysis complete.
+INFO (ISL009): Started detection of BLK_NO_RCHB, ARY_IS_OOBI, ASG_AR_OVFL, CAS_NO_PRIO, EXP_AR_OVFL checks
+INFO (ISL009): Started detection of FSM_IS_DDLK,FSM_IS_LVLK,FSM_IS_PDLK,FSM_IS_PLLK checks
+INFO (ISL009): Started detection of BUS_IS_CONT,BUS_IS_FLOT checks
+INFO (ISL014): Started extracting properties for BLK_NO_RCHB,ARY_IS_OOBI,ASG_AR_OVFL,CAS_NO_PRIO,EXP_AR_OVFL checks
+INFO (ISL015): Extracted 8 properties of BLK_NO_RCHB,ARY_IS_OOBI,ASG_AR_OVFL,CAS_NO_PRIO,EXP_AR_OVFL
+INFO (ISL014): Started extracting properties for FSM_IS_DDLK,FSM_IS_LVLK,FSM_IS_PDLK,FSM_IS_PLLK checks
+INFO (ISL015): Extracted 0 properties of FSM_IS_DDLK,FSM_IS_LVLK,FSM_IS_PDLK,FSM_IS_PLLK
+INFO (ISL014): Started extracting properties for BUS_IS_CONT,BUS_IS_FLOT checks
+INFO (ISL018): Started extraction of structural checks
+INFO (ISL018): Started building clock tree
+INFO (ISL018): Finished building clock tree
+INFO (ISL018): Started building reset tree
+INFO (ISL018): Finished building reset tree
+INFO (ISL018): Violation Count: Errors = 0 Warnings = 20 Info = 1
+29
+INFO (IPL005): Received request to exit from the console.
+INFO (IPL014): Waiting for the Tcl-thread to exit.
+INFO (IPL018): The peak resident set memory use for this session was 0.499 GB.
+INFO (IPL015): The Tcl-thread exited with status 0.
+INFO (IPL016): Exiting the analysis session with status 0.

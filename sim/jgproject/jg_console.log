@@ -1,0 +1,64 @@
+2025-09-23 14:55:16.833928 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.833984 (255964) main____ INFO    Jasper version info
+2025-09-23 14:55:16.833988 (255964) main____ INFO      tool      : Jasper 2022.03
+2025-09-23 14:55:16.833991 (255964) main____ INFO      version   : 2022.03p002 64 bits
+2025-09-23 14:55:16.833992 (255964) main____ INFO      build date: 2022.05.26 13:21:20 UTC
+2025-09-23 14:55:16.833994 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.833996 (255964) main____ INFO    Runtime info:
+2025-09-23 14:55:16.833998 (255964) main____ INFO      platform  : Linux 6.8.0-51-generic x86_64
+2025-09-23 14:55:16.834001 (255964) main____ INFO      hostname  : vcsdl4
+2025-09-23 14:55:16.834003 (255964) main____ INFO      pid       : 255964
+2025-09-23 14:55:16.834005 (255964) main____ INFO      arguments : '-style' 'windows' '-superlint'
+2025-09-23 14:55:16.834007 (255964) main____ INFO      locale    : UTF-8
+2025-09-23 14:55:16.834009 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.834010 (255964) main____ INFO    System resource limits info:
+2025-09-23 14:55:16.834012 (255964) main____ INFO      virtual memory: unlimited
+2025-09-23 14:55:16.834013 (255964) main____ INFO      cpu time      : unlimited
+2025-09-23 14:55:16.834015 (255964) main____ INFO      processes     : unlimited
+2025-09-23 14:55:16.834021 (255964) main____ INFO      stack size    : 8388608 B
+2025-09-23 14:55:16.834022 (255964) main____ INFO      core file size: unlimited
+2025-09-23 14:55:16.834026 (255964) main____ INFO      open files    : 1048576
+2025-09-23 14:55:16.834027 (255964) main____ INFO      file size     : unlimited
+2025-09-23 14:55:16.834029 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.834030 (255964) main____ INFO    Memory statistics:
+2025-09-23 14:55:16.834032 (255964) main____ INFO      total physical memory  : 263142504 kB
+2025-09-23 14:55:16.834034 (255964) main____ INFO      free physical memory   : 59681552 kB
+2025-09-23 14:55:16.834035 (255964) main____ INFO      committed address space: 52164032 kB
+2025-09-23 14:55:16.834036 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.834482 (255964) main____ INFO    Important environment variables:
+2025-09-23 14:55:16.834488 (255964) main____ INFO      DISPLAY               : ':1001.0'
+2025-09-23 14:55:16.834491 (255964) main____ INFO      JASPER_INSTALL_DIR    : '/cad/cadence/JASPER/jasper_2022.03p002'
+2025-09-23 14:55:16.834493 (255964) main____ INFO      JASPER_MACRO_LINEFILES: '1'
+2025-09-23 14:55:16.834495 (255964) main____ INFO      JASPER_OS_CHECK       : '1'
+2025-09-23 14:55:16.834497 (255964) main____ INFO      JG_MACRO_LINEFILES    : '1'
+2025-09-23 14:55:16.834498 (255964) main____ INFO      LANG                  : 'en_US.UTF-8'
+2025-09-23 14:55:16.834500 (255964) main____ INFO      LM_LICENSE_FILE       : '1717@lshc:26585@lshc:5280@lshc:'
+2025-09-23 14:55:16.834502 (255964) main____ INFO    ----------------------------------------
+2025-09-23 14:55:16.834996 (255964) lic_core INFO    Initializing license system ...
+2025-09-23 14:55:16.836434 (255964) lic_core INFO    ... license system initialized.
+2025-09-23 14:55:16.837747 (255964) lic__man INFO    Claim 'main' for <ui>.
+2025-09-23 14:55:16.837783 (255964) lic_core INFO    (1) checking out 'jasper_interactive' ...
+2025-09-23 14:55:17.110722 (255964) lic_core INFO    ... (1) checkout succeeded
+2025-09-23 14:55:17.110869 (255964) lic__man INFO    Claim 'superlint' for <ui>.
+2025-09-23 14:55:17.110893 (255964) lic_core INFO    (2) checking out 'jasper_afl' ...
+2025-09-23 14:55:17.200133 (255964) lic_core INFO    ... (2) checkout failed (error: -5) ("FLEXnet ERROR(-5, 0, 0): No such feature exists.")
+2025-09-23 14:55:17.200260 (255964) lic_core INFO    (3) checking out 'jasper_dao' ...
+2025-09-23 14:55:17.335548 (255964) lic_core INFO    ... (3) checkout succeeded
+2025-09-23 14:55:17.336627 (255964) main____ INFO    Tool inactivity delay is 480000 ms.
+2025-09-23 14:55:17.706559 (255964) lic__man INFO    Claim 'superlint' for <ui>.
+2025-09-23 14:55:17.820972 (255964) lic__man INFO    Unclaim 'superlint' for <ui>.
+2025-09-23 14:55:17.821046 (255964) lic__man INFO    Claim 'superlint' for <ui>.
+2025-09-23 14:55:17.823813 (255964) session_ INFO    Starting analysis session with session id 'session_0' (launcher: <local>) ...
+2025-09-23 14:55:17.829615 (255964) session_ INFO    Analysis session with session id 'session_0' started (pid: 255977)
+2025-09-23 14:55:18.513840 (255964) session_ INFO    Analysis session 'session_0' connected to the console (host: 127.0.0.1:60740)
+2025-09-23 14:56:10.814005 (255964) lic__man INFO    Unclaim everything for 'session_0'.
+2025-09-23 14:57:09.877655 (255964) lic__man INFO    Claim 'superlint' for 'session_0'.
+2025-09-23 14:59:58.921213 (255964) main____ INFO    Releasing console memory by request of analysis session 'session_0'.
+2025-09-23 14:59:58.923972 (255964) lic__man INFO    Unclaim everything for 'session_0'.
+2025-09-23 15:00:21.657794 (255964) lic__man INFO    Unclaim everything for 'session_0'.
+2025-09-23 15:00:58.243904 (255964) lic__man INFO    Claim 'superlint' for 'session_0'.
+2025-09-23 15:03:56.527618 (255964) main____ INFO    About to exit: requested from GUI
+2025-09-23 15:03:56.605107 (255964) session_ INFO    Analysis session 'session_0' disconnected.
+2025-09-23 15:03:56.615111 (255964) lic_core INFO    (1) checkin jasper_interactive
+2025-09-23 15:03:56.623319 (255964) lic_core INFO    (3) checkin jasper_dao
+2025-09-23 15:03:56.630454 (255964) main____ INFO    Exiting with status 0.
