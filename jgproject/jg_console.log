@@ -120,3 +120,4 @@
 2025-09-23 17:49:33.819783 (256610) lic__man INFO    Claim 'fpv' for 'session_0'.
 2025-09-23 17:49:33.819862 (256610) lic__man INFO    Claim 'fpv' for 'session_0/prove-0'.
 2025-09-23 17:49:34.602035 (256610) lic__man INFO    Unclaim everything for 'session_0/prove-0'.
+2025-09-23 17:58:32.898071 (256610) lic__man INFO    Entering idle state.
