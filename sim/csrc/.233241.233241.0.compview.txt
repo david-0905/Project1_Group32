@@ -1,9 +1,0 @@
-{"vcs1":{"timestamp_begin":1758607159.124533932, "rt":0.70, "ut":0.14, "st":0.22}}
-Command exited with non-zero status 255
-{"vcselab":{"timestamp_begin":1758607159.930128922, "rt":0.17, "ut":0.03, "st":0.11}}
-{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1758607158.630304441}
-{"VCS_COMP_START_TIME": 1758607158.630304441}
-{"VCS_COMP_END_TIME": 1758607160.135317407}
-{"VCS_USER_OPTIONS": "-debug_access+all -sverilog -R -full64 -v tb.sv ../src/FIFO.sv +incdir+../src"}
-{"vcs1": {"peak_mem": 359988}}
-{"vcselab": {"peak_mem": 152144}}

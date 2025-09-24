@@ -1,9 +1,0 @@
-{"vcs1":{"timestamp_begin":1758617695.646455428, "rt":0.88, "ut":0.13, "st":0.24}}
-{"vcselab":{"timestamp_begin":1758617696.624661648, "rt":0.67, "ut":0.16, "st":0.19}}
-{"link":{"timestamp_begin":1758617697.375723549, "rt":0.20, "ut":0.11, "st":0.10}}
-{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1758617695.078191553}
-{"VCS_COMP_START_TIME": 1758617695.078191553}
-{"VCS_COMP_END_TIME": 1758617698.844616725}
-{"VCS_USER_OPTIONS": "-debug_access+all -sverilog -R -full64 tb.sv -sv ../src/FIFO.sv"}
-{"vcs1": {"peak_mem": 361408}}
-{"vcselab": {"peak_mem": 217060}}

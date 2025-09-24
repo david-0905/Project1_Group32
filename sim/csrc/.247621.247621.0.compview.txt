@@ -1,6 +1,0 @@
-Command exited with non-zero status 255
-{"vcs1":{"timestamp_begin":1758608454.805934775, "rt":1.25, "ut":0.05, "st":0.14}}
-{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1758608454.275561088}
-{"VCS_COMP_START_TIME": 1758608454.275561088}
-{"VCS_COMP_END_TIME": 1758608456.151808865}
-{"VCS_USER_OPTIONS": "-debug_access+all -sverilog -R -full64 -top tb tb.sv ../src/FIFO.sv"}

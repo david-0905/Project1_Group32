@@ -1,6 +1,0 @@
-Command exited with non-zero status 255
-{"comelab":{"timestamp_begin":1758607558.235458085, "rt":0.86, "ut":0.28, "st":0.72}}
-{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1758607557.747857861}
-{"VCS_COMP_START_TIME": 1758607557.747857861}
-{"VCS_COMP_END_TIME": 1758607559.153933266}
-{"VCS_USER_OPTIONS": "-debug_access+all -sverilog -R -full64 -top tb -v ../sim/tb.sv"}
