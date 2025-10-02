@@ -30,5 +30,10 @@ mysb_pass:
 	cd build && \
 	jg  ../script/fifo_integrity.tcl &
 
+mysb_fail:
+	mkdir -p build
+	cd build && \
+	jg  ../script/fifo_integrity_bug.tcl &
+
 clean:
 	rm -rf build
