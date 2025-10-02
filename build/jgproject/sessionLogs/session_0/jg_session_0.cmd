@@ -5,10 +5,10 @@
 # version   : 2022.03p002 64 bits
 # build date: 2022.05.26 13:21:20 UTC
 # ----------------------------------------
-# started   : 2025-09-24 13:42:55 CST
+# started   : 2025-10-02 14:21:55 CST
 # hostname  : vcsdl4.(none)
-# pid       : 276298
-# arguments : '-label' 'session_0' '-console' '//127.0.0.1:39631' '-style' 'windows' '-data' 'AAAAeHicY2RgYLCp////PwMYMFcBCQEGHwZfhiAGVyDpzxAGpOGA8QGUYcMI4gGxEYMeEOozFDMkMxQxZDIUMJQAeVkMiUCRAoZUoFg8kJUEJI2B6kqAqnJA+gES5xEK' '-proj' '/home/joane3131/FV_1141/Project1_Group32/build/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/joane3131/FV_1141/Project1_Group32/build/jgproject/.tmp/.initCmds.tcl' '../script/jasper_sb_3.tcl'
+# pid       : 2791
+# arguments : '-label' 'session_0' '-console' '//127.0.0.1:34837' '-style' 'windows' '-data' 'AAAAeHicY2RgYLCp////PwMYMFcBCQEGHwZfhiAGVyDpzxAGpOGA8QGUYcMI4gGxEYMeEOozFDMkMxQxZDIUMJQAeVkMiUCRAoZUoFg8kJUEJI2B6kqAqnJA+gES5xEK' '-proj' '/home/joane3131/FV_1141/Project1_Group32/build/jgproject/sessionLogs/session_0' '-init' '-hidden' '/home/joane3131/FV_1141/Project1_Group32/build/jgproject/.tmp/.initCmds.tcl' '../script/jasper_sb_3.tcl'
 clear -all
 check_cov -init -type all
 
@@ -23,3 +23,4 @@ clock clk
 reset ~rstN
 
 prove -all
+visualize -violation -property <embedded>::FIFO.u_sb.u_scoreboard.genblk6.core.genblk5.genblk2.no_overflow -new_window

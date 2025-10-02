@@ -14,7 +14,7 @@ jasper_scoreboard_3 #(
     .OUT_CHUNKS(1),
     .ORDERING(`JS3_IN_ORDER),
     .SINGLE_CLOCK(1),
-    .MAX_PENDING(8)
+    .MAX_PENDING(4)
 ) u_scoreboard (
     .clk(clk),
     .rstN(rst_b),
