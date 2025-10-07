@@ -11,8 +11,8 @@ module my_scoreboard_bind (
 );
 
 logic vld_in, vld_out;
-assign vld_in = write_en && !full;
-assign vld_out = read_en && !empty;
+assign vld_in = write_en && (!full || read_en);
+assign vld_out = read_en && (!empty || write_en);
 
 my_scoreboard scoreboard(
     .clk(clk),
@@ -35,7 +35,7 @@ module my_scoreboard (
 );
 
 logic [3:0] ScoreBoard_mem[7:0];
-logic ScoreBoard_InValid[7:0];
+logic [2:0] counter;
 logic [2:0] write_ptr;
 logic [2:0] read_ptr;
 
@@ -44,30 +44,31 @@ always_ff @(posedge clk ) begin
     if(~rstN) begin
         for(int i; i<8;i++) begin
             ScoreBoard_mem[i] <= 4'b0;
-            ScoreBoard_InValid[i] <= 1'b0;
+            counter <= 3'b0;
             write_ptr <= 3'b0;
             read_ptr <= 3'b0;
         end
     end
+    // else if (incoming_vld && outgoing_vld && (write_ptr==read_ptr)) begin
+
+    // end
     else if(incoming_vld && outgoing_vld) begin
         ScoreBoard_mem[write_ptr] <= incoming_data;
-        ScoreBoard_InValid[write_ptr] <= 1'b1;
-        ScoreBoard_InValid[read_ptr] <= 1'b0;
         write_ptr <= write_ptr + 3'b1;
         read_ptr <= read_ptr + 3'b1;
     end
     else if(incoming_vld) begin
         ScoreBoard_mem[write_ptr] <= incoming_data;
-        ScoreBoard_InValid[write_ptr] <= 1'b1;
+        counter <= counter + 3'b1;
         write_ptr <= write_ptr + 3'b1;
 
         read_ptr <= read_ptr;
     end
     else if(outgoing_vld)begin
         write_ptr <= write_ptr;
-        
+
+        counter <= counter - 3'b1;
         read_ptr <= read_ptr + 3'b1;
-        ScoreBoard_InValid[read_ptr] <= 1'b0;
     end
     else begin
         write_ptr <= write_ptr ;
@@ -75,20 +76,23 @@ always_ff @(posedge clk ) begin
     end
 end
 
+logic [3:0]except;
+assign except = (counter==0) ? incoming_data : ScoreBoard_mem[read_ptr] ;
+
 // Overflow property
 //DA_TRE_RACE = 
 //Detect Arithmetic Threshold/Range Exceeded — Raise Assertion/Carry Event
 DA_TRE_RACE : assert property(
     @(posedge clk)
     disable iff (!rstN)
-    (outgoing_vld) |->ScoreBoard_InValid[read_ptr] == 1'b1
+    (outgoing_vld) |->counter <= 3'd4
 );
 
 // Data Integrity
 RACE_ETA_3 : assert property(
     @(posedge clk)
     disable iff (!rstN)
-    outgoing_vld |-> ScoreBoard_mem[read_ptr]==outgoing_data
+    outgoing_vld |-> except == outgoing_data 
 );
 
 endmodule

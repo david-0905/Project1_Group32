@@ -29,7 +29,7 @@ always_ff @(posedge clk) begin : READ_PtrCtrl
     if (~rstN) begin
         read_ptr <= 3'b0;
     end
-    else if(read_en && !empty_flag) begin
+    else if(read_en && (!empty_flag || write_en)) begin
         read_ptr <= read_ptr + 3'b001;
     end
     else begin
@@ -42,7 +42,7 @@ always_ff @(posedge clk) begin : Write_PtrCtrl
     if (~rstN) begin
         write_ptr <= 3'b0;
     end
-    else if(write_en && !full_flag) begin
+    else if(write_en && (!full_flag || read_en)) begin
         write_ptr <= write_ptr + 3'b001;
     end
     else begin
@@ -57,7 +57,7 @@ always_ff @(posedge clk ) begin : FIFO_behavior
             FIFO_reg[i] <= 4'b0;
         end
     end
-    else if(write_en && ! full_flag) begin
+    else if(write_en && (!full_flag || read_en)) begin
         FIFO_reg[write_ptr[1:0]] <= write_data;
     end   
 end
