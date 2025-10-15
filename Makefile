@@ -36,4 +36,4 @@ mysb_fail:
 	jg  ../script/fifo_integrity_bug.tcl &
 
 clean:
-	rm -rf build
+	rm -rf BSSM *.log *.key csrc ucli.key vc_hdrs.h simv* verdiLog build DVEfiles BSSLib.lib++ nWaveLog novas*

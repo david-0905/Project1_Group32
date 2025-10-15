@@ -34,11 +34,6 @@ always_ff@(posedge clk or negedge rstN) begin
   end
 end
 
-// For Read Write at same time , since data is not written into memory 
-assign rd_wr_same_full = (read_en && write_en && full ); // For full condition check
-assign rd_wr_same_empty = (read_en && write_en && empty);
-assign read_data = (!rd_wr_same_empty)? mem[true_read_ptr] : write_data;
-
 // Write Operation
 always_ff@(posedge clk or negedge rstN) begin
   if(!rstN) begin
@@ -55,6 +50,11 @@ end
 // Full and Empty Flags
 assign full = (msb_write_ptr != msb_read_ptr) && (true_write_ptr == true_read_ptr);
 assign empty = (write_ptr == read_ptr);
+
+// For Read Write at same time , since data is not written into memory 
+assign rd_wr_same_full = (read_en && write_en && full ); // For full condition check
+assign rd_wr_same_empty = (read_en && write_en && empty);
+assign read_data = (!rd_wr_same_empty)? mem[true_read_ptr] : write_data;
 
 endmodule
 `endif

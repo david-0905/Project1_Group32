@@ -11,7 +11,6 @@ logic [3:0] sb_mem [3:0]; // Scoreboard memory
 logic [1:0] wr_ptr, rd_ptr;
 logic [2:0] counter;
 
-logic vld_out_1t;
 logic [3:0] data_out_1t;
 logic [3:0] sb_data_1t;
 logic [3:0] data_out_golden;
@@ -54,11 +53,9 @@ end
 // Capturing output data and valid signal
 always_ff @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
-    vld_out_1t <= 1'b0;
     data_out_1t <= 4'd0;
     data_out_golden <= 4'd0;
   end else begin
-    vld_out_1t <= vld_out;
     data_out_1t <= data_out;
     if(counter == 3'd0) begin
       data_out_golden <= data_in;
@@ -78,7 +75,7 @@ no_overflow : assert property (
 data_integrity : assert property (
     @(posedge clk)
     disable iff (!rst_b)
-    (vld_out_1t) |-> (data_out_golden == data_out_1t)); // Ensuring data integrity
+    (vld_out) |=> (data_out_golden == data_out_1t)); // Ensuring data integrity
 
 endmodule
 

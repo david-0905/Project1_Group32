@@ -28,7 +28,7 @@ assign {msb_read_ptr, true_read_ptr} = read_ptr;
 always_ff@(posedge clk or negedge rstN) begin
   if(!rstN) begin
     read_ptr <= 3'd0;
-  end else if(read_en && !empty) begin
+  end else if(read_en) begin
     read_ptr <= read_ptr + 3'd1;
   end
 end
@@ -43,7 +43,7 @@ always_ff@(posedge clk or negedge rstN) begin
     for(int i = 0; i < DEPTH; i++) begin
       mem[i] <= 4'd0;
     end 
-  end else if(write_en && !full) begin
+  end else if(write_en) begin
     write_ptr <= write_ptr + 3'd1;
     mem[true_write_ptr] <= write_data;
   end
