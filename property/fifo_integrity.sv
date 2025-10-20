@@ -50,20 +50,20 @@ always_ff @(posedge clk or negedge rst_b) begin
     end
 end
 
-logic [3:0] pre_rd_ptr;
+logic [3:0] rd_ptr_1t;
 // Capturing output data and valid signal
 always_ff @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
     data_out_1t <= 4'd0;
-    pre_rd_ptr <= 3'd0;
+    rd_ptr_1t <= 3'd0;
   end else begin
     data_out_1t <= data_out;
-    pre_rd_ptr <= rd_ptr;
+    rd_ptr_1t <= rd_ptr;
   end
 end
 
 // check
-assign data_out_golden = sb_mem[pre_rd_ptr];
+assign data_out_golden = sb_mem[rd_ptr_1t];
 
 // Overflow Check (Assertion: Overflow when FIFO is full and write occurs without read)
 no_overflow : assert property (
