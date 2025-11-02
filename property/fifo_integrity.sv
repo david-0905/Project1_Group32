@@ -4,7 +4,9 @@ module  fifo_integrity(
     input vld_in,
     input [3:0] data_in,
     input vld_out,
-    input [3:0] data_out
+    input [3:0] data_out,
+    input full,
+    input empty
 );
 
 logic [5:0] sb_mem [3:0]; // Scoreboard memory
@@ -125,6 +127,61 @@ data_corrupted : assert property (
     disable iff (!rst_b)
     (vld_out_1t) |-> (data_out_golden == data_out_1t)); // Ensuring data don't corrupted
 
+///////////////////////////////////////////////////////////////
+logic [3:0] sampling_d;
+logic rand_samping_var;
+assume property($stable(sampling_d)); 
+
+logic sampling_in;
+logic sampling_out;
+
+logic incr = vld_in && (!sampling_in ) ;
+logic decr = vld_out && (!sampling_out ) ;
+//logic decr = vld_out && (!((tracking_counter==1) && sampling_in) || (full&& vld_in)) ;
+//第一個就是sampling_d 並且馬上讀入讀出
+//logic sampled_same_read_write = sampling_d == data_in && vld_out && vld_in ;
+always_ff @(posedge clk) begin : Sample_In_Region
+    if(!rst_b) begin
+        sampling_in <= 1'b0;
+    end
+    else if(sampling_d == data_in && incr && rand_samping_var) begin
+        sampling_in <= 1'b1;
+    end
+end
+                    //裡面至少一筆資料
+assign must_read = ((tracking_counter==1) && sampling_in && decr) || (tracking_counter==0 && incr && decr && rand_samping_var && sampling_d == data_in);
+always_ff @(posedge clk) begin : Sample_Out_Region
+    if(!rst_b) begin
+        sampling_out <= 1'b0;
+    end
+    else if(must_read) begin
+        sampling_out <= 1'b1;
+    end
+end
+
+logic [3:0]tracking_counter;
+always_ff @(posedge clk) begin : Ptr_counter
+    if(!rst_b) begin
+        tracking_counter <= 3'b0;
+    end 
+    else begin
+        tracking_counter <= tracking_counter + incr - decr;
+    end
+
+end
+
+data_intigrity : assert property (
+    @(posedge clk)
+    disable iff (!rst_b)
+    (must_read  |-> (data_out==sampling_d)) 
+);
+
+tracking_counter_under : cover property (
+    @(posedge clk)
+    disable iff (!rst_b)
+    (tracking_counter == 3'h1) 
+);
+
 endmodule
 
 // Bind for FIFO Integrity
@@ -134,5 +191,7 @@ bind FIFO fifo_integrity u_sb (
     .vld_in(write_en && (!full || read_en)),    // Write enable condition (FIFO not full or reading)
     .data_in(write_data),
     .vld_out(read_en && (!empty || write_en)),   // Read enable condition (FIFO not empty or writing)
-    .data_out(read_data)
+    .data_out(read_data),
+    .full(full),
+    .empty(empty)
 );
