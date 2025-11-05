@@ -86,25 +86,6 @@ no_overflow : assert property (
     !(counter == 3'd4 && vld_in && !vld_out)); // FIFO overflow check
 
 
-// Data drop Check (Assertion:)
-localparam int SB_DEPTH = 4;
-
-logic [SB_DEPTH-1:0] match_vec;
-logic [3:0] true_sb_mem_data [3:0];
-
-always_comb begin
-    for (integer i = 0; i < SB_DEPTH; i++) begin : GEN_SB_CMP
-    // combinational compare
-    true_sb_mem_data[i] = sb_mem[i] & 6'hf;
-    match_vec[i] = (data_out_golden == true_sb_mem_data[i]);
-    end
-end
-
-no_drop : assert property (
-  @(posedge clk)
-  disable iff (!rst_b)
-  vld_out |-> (|match_vec) && ( !(counter == 3'd4 && vld_in && !vld_out) ||(data_out_golden == data_in))
-);
 // Data Duplicate Check (Assertion: After vld_out, the next tag shouln't same as last tag)
 // 當讀取請求，讀出的資料與下一次讀取請求後讀出的資料 tag不能一樣
 no_duplicate : assert property(
@@ -122,7 +103,7 @@ no_OutOfOrder : assert property(
 );
 
 // Data Corrupted Check (Assertion: Written data should match read data)
-data_corrupted : assert property (
+no_drop_and_data_corrupted : assert property (
     @(posedge clk)
     disable iff (!rst_b)
     (vld_out_1t) |-> (data_out_golden == data_out_1t)); // Ensuring data don't corrupted
