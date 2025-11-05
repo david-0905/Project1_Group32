@@ -14,7 +14,6 @@ logic [1:0] wr_ptr, rd_ptr;
 logic [2:0] counter;
 logic [1:0] tag;
 
-logic vld_out_1t;
 logic [3:0] data_out_1t;
 logic [3:0] sb_data_1t;
 logic [3:0] data_out_golden;
@@ -32,13 +31,13 @@ always_ff @(posedge clk or negedge rst_b) begin
             tag <= tag + 2'd1;
         end
         if (vld_out) begin
-            rd_ptr <= rd_ptr + 2'd1;
+            rd_ptr <= rd_ptr + 3'd1;
         end
 
         if (vld_in && !vld_out) begin
-            counter <= counter + 3'd1;
+            counter <= counter + 4'd1;
         end else if (!vld_in && vld_out) begin
-            counter <= counter - 3'd1;
+            counter <= counter - 4'd1;
         end
     end
 end
@@ -62,12 +61,10 @@ assign untag_read_data = sb_mem[rd_ptr];
 // Capturing output data and valid signal
 always_ff @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
-    vld_out_1t <= 1'b0;
     data_out_1t <= 4'd0;
     data_out_golden <= 4'd0;
     data_out_tag <= 2'd0;
   end else begin
-    vld_out_1t <= vld_out;
     data_out_1t <= data_out;
     if(counter == 3'd0) begin
       data_out_golden <= data_in;
@@ -79,11 +76,14 @@ always_ff @(posedge clk or negedge rst_b) begin
   end
 end
 
+// check
+assign data_out_golden = sb_mem[rd_ptr_1t];
+
 // Overflow Check (Assertion: Overflow when FIFO is full and write occurs without read)
 no_overflow : assert property (
     @(posedge clk)
     disable iff (!rst_b)
-    !(counter == 3'd4 && vld_in && !vld_out)); // FIFO overflow check
+    !(counter == 4'd4 && vld_in && !vld_out)); // FIFO overflow check
 
 
 

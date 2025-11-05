@@ -98,7 +98,9 @@ module tb();
             $display("Data Matched: %0d", read_data);
           end
         end 
-      end else begin
+      end else if(queue_model.size() == 5) begin
+          $display("Overflow detected");
+          $fatal;
       end
     end
   endtask

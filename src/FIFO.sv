@@ -28,12 +28,11 @@ assign {msb_read_ptr, true_read_ptr} = read_ptr;
 // Read Operation
 always_ff@(posedge clk or negedge rstN) begin
   if(!rstN) begin
-    read_ptr <= 3'd0;
+    read_ptr <= '0;
   end else if(read_en && (!empty || write_en)) begin
-    read_ptr <= read_ptr + 3'd1;
+    read_ptr <= read_ptr + 1;
   end
 end
-
 // For Read Write at same time , since data is not written into memory 
 assign rd_wr_same_full = (read_en && write_en && full ); // For full condition check
 assign rd_wr_same_empty = (read_en && write_en && empty);
@@ -42,12 +41,12 @@ assign read_data = (!rd_wr_same_empty)? mem[true_read_ptr] : write_data;
 // Write Operation
 always_ff@(posedge clk or negedge rstN) begin
   if(!rstN) begin
-    write_ptr <= 3'd0;  
+    write_ptr <= 'd0;  
     for(int i = 0; i < DEPTH; i++) begin
       mem[i] <= 4'd0;
     end 
   end else if(write_en && (!full || read_en)) begin
-    write_ptr <= write_ptr + 3'd1;
+    write_ptr <= write_ptr + 1;
     mem[true_write_ptr] <= write_data;
   end
 end
@@ -55,6 +54,7 @@ end
 // Full and Empty Flags
 assign full = (msb_write_ptr != msb_read_ptr) && (true_write_ptr == true_read_ptr);
 assign empty = (write_ptr == read_ptr);
+
 
 endmodule
 `endif
