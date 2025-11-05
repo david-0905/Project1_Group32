@@ -4,12 +4,15 @@ module  fifo_integrity(
     input vld_in,
     input [3:0] data_in,
     input vld_out,
-    input [3:0] data_out
+    input [3:0] data_out,
+    input full,
+    input empty
 );
 
-logic [3:0] sb_mem [7:0]; // Scoreboard memory
-logic [2:0] wr_ptr, rd_ptr;
-logic [3:0] counter;
+logic [5:0] sb_mem [3:0]; // Scoreboard memory
+logic [1:0] wr_ptr, rd_ptr;
+logic [2:0] counter;
+logic [1:0] tag;
 
 logic [3:0] data_out_1t;
 logic [3:0] sb_data_1t;
@@ -18,12 +21,14 @@ logic [3:0] data_out_golden;
 // FIFO Counters and Valid Signals
 always_ff @(posedge clk or negedge rst_b) begin
     if (!rst_b) begin
-        wr_ptr <= 3'd0;
-        rd_ptr <= 3'd0;
-        counter <= 4'd0;
+        wr_ptr <= 2'd0;
+        rd_ptr <= 2'd0;
+        counter <= 3'd0;
+        tag <= 2'd0;
     end else begin
         if (vld_in) begin
-            wr_ptr <= wr_ptr + 3'd1;
+            wr_ptr <= wr_ptr + 2'd1;
+            tag <= tag + 2'd1;
         end
         if (vld_out) begin
             rd_ptr <= rd_ptr + 3'd1;
@@ -40,25 +45,34 @@ end
 // Writing data to the Scoreboard
 always_ff @(posedge clk or negedge rst_b) begin
     if (!rst_b) begin
-        for (int i = 0; i < 7; i++) begin
-            sb_mem[i] <= 4'd0;
+        for (int i = 0; i < 4; i++) begin
+            sb_mem[i] <= 6'd0;
         end
     end else begin
         if (vld_in) begin
-            sb_mem[wr_ptr] <= data_in;
+            sb_mem[wr_ptr] <= {tag,data_in};
         end
     end
 end
 
-logic [3:0] rd_ptr_1t;
+logic [5:0] untag_read_data;
+logic [1:0] data_out_tag;
+assign untag_read_data = sb_mem[rd_ptr];
 // Capturing output data and valid signal
 always_ff @(posedge clk or negedge rst_b) begin
   if (!rst_b) begin
     data_out_1t <= 4'd0;
-    rd_ptr_1t <= 3'd0;
+    data_out_golden <= 4'd0;
+    data_out_tag <= 2'd0;
   end else begin
     data_out_1t <= data_out;
-    rd_ptr_1t <= rd_ptr;
+    if(counter == 3'd0) begin
+      data_out_golden <= data_in;
+      data_out_tag <= tag;
+    end else begin
+      data_out_golden <= untag_read_data[3:0] ;
+      data_out_tag <= untag_read_data[5:4];
+    end
   end
 end
 
@@ -71,11 +85,82 @@ no_overflow : assert property (
     disable iff (!rst_b)
     !(counter == 4'd4 && vld_in && !vld_out)); // FIFO overflow check
 
-// Data Integrity Check (Assertion: Written data should match read data)
-data_integrity : assert property (
+
+
+// Data Duplicate Check (Assertion: After vld_out, the next tag shouln't same as last tag)
+// 當讀取請求，讀出的資料與下一次讀取請求後讀出的資料 tag不能一樣
+no_duplicate : assert property(
+    @(posedge clk)
+    disable iff(!rst_b)
+    vld_out_1t |=> (data_out_tag)!= $past(data_out_tag)
+);
+
+// Data out of order Check (Assertion:)
+// 讀取的tag必須照順序
+no_OutOfOrder : assert property(
+    @(posedge clk)
+    disable iff(!rst_b)
+    vld_out_1t |=> (data_out_tag) == $past(data_out_tag+ 2'd1)
+);
+
+// Data Corrupted Check (Assertion: Written data should match read data)
+no_drop_and_data_corrupted : assert property (
     @(posedge clk)
     disable iff (!rst_b)
-    (vld_out) |=> (data_out_golden == data_out_1t)); // Ensuring data integrity
+    (vld_out_1t) |-> (data_out_golden == data_out_1t)); // Ensuring data don't corrupted
+
+///////////////////////////////////////////////////////////////
+logic [3:0] sampling_d;
+logic rand_samping_var;
+assume property($stable(sampling_d)); 
+
+logic sampling_in;
+logic sampling_out;
+
+logic incr = vld_in && (!sampling_in ) ;
+logic decr = vld_out && (!sampling_out ) ;
+
+always_ff @(posedge clk) begin : Sample_In_Region
+    if(!rst_b) begin
+        sampling_in <= 1'b0;
+    end
+    else if(sampling_d == data_in && incr && rand_samping_var) begin
+        sampling_in <= 1'b1;
+    end
+end
+                    //裡面至少一筆資料
+assign must_read = ((tracking_counter==1) && sampling_in && decr) || (tracking_counter==0 && incr && decr && rand_samping_var && sampling_d == data_in);
+always_ff @(posedge clk) begin : Sample_Out_Region
+    if(!rst_b) begin
+        sampling_out <= 1'b0;
+    end
+    else if(must_read) begin
+        sampling_out <= 1'b1;
+    end
+end
+
+logic [3:0]tracking_counter;
+always_ff @(posedge clk) begin : Ptr_counter
+    if(!rst_b) begin
+        tracking_counter <= 3'b0;
+    end 
+    else begin
+        tracking_counter <= tracking_counter + incr - decr;
+    end
+
+end
+
+data_intigrity : assert property (
+    @(posedge clk)
+    disable iff (!rst_b)
+    (must_read  |-> (data_out==sampling_d)) 
+);
+
+tracking_counter_under : cover property (
+    @(posedge clk)
+    disable iff (!rst_b)
+    (tracking_counter == 3'h1) 
+);
 
 endmodule
 
@@ -86,5 +171,7 @@ bind FIFO fifo_integrity u_sb (
     .vld_in(write_en && (!full || read_en)),    // Write enable condition (FIFO not full or reading)
     .data_in(write_data),
     .vld_out(read_en && (!empty || write_en)),   // Read enable condition (FIFO not empty or writing)
-    .data_out(read_data)
+    .data_out(read_data),
+    .full(full),
+    .empty(empty)
 );
